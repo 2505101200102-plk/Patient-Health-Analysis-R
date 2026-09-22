@@ -1,0 +1,83 @@
+---
+title: "Patient Health Analysis Using R"
+author: "Palak Chavda | Enrollment No.: 2505101200102"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+# Introduction
+This Tiny Project analyzes patient health records using R.
+
+**Student:** Palak Chavda  
+**Enrollment:** 2505101200102
+
+# Objectives
+- Import CSV data
+- Clean and inspect the dataset
+- Calculate descriptive statistics
+- Create graphs
+- Analyze correlations
+- Interpret results
+
+# Import Data
+
+```{r}
+health_data <- read.csv("Palak_Chavda_Patient_Health.csv")
+head(health_data)
+```
+
+# Data Inspection
+
+```{r}
+summary(health_data)
+str(health_data)
+colSums(is.na(health_data))
+sum(duplicated(health_data))
+```
+
+# BMI Statistics
+
+```{r}
+mean(health_data$BMI)
+median(health_data$BMI)
+var(health_data$BMI)
+sd(health_data$BMI)
+```
+
+# Risk Level Distribution
+
+```{r}
+risk_count <- table(health_data$Risk_Level)
+pie(risk_count, main="Risk Level Distribution")
+```
+
+# Average BMI by Gender
+
+```{r}
+gender_bmi <- aggregate(BMI ~ Gender, data=health_data, FUN=mean)
+barplot(gender_bmi$BMI, names.arg=gender_bmi$Gender,
+        main="Average BMI by Gender")
+```
+
+# BMI vs Blood Pressure
+
+```{r}
+plot(health_data$BMI, health_data$Blood_Pressure,
+     pch=19, main="BMI vs Blood Pressure")
+abline(lm(Blood_Pressure ~ BMI, data=health_data))
+cor(health_data$BMI, health_data$Blood_Pressure)
+```
+
+# Findings
+
+- Mean BMI: 28.24
+- Median BMI: 28.30
+- Standard deviation: 3.89
+- BMI and Blood Pressure correlation: 0.952
+
+# Conclusion
+This project demonstrates the complete R data-analysis workflow using healthcare data.
